@@ -48,3 +48,9 @@ export default tseslint.config({
   },
 })
 ```
+
+
+TODO:
+
+- ajeitar o front com css bootstrap
+- tabela de cams e verificar roles
