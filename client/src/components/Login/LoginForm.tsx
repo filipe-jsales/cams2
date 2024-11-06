@@ -1,14 +1,14 @@
-"use client";
 import { useState } from "react";
-import ForgotPasswordModal from "../Modal/ForgotPasswordModa/ForgotPasswordModal";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import ForgotPasswordModal from "../Modal/ForgotPasswordModal/ForgotPasswordModal";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isForgotPasswordModalOpen, setIsForgotPasswordModalOpen] =
-    useState(false);
+    useState(false); // Estado para o modal
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -29,71 +29,82 @@ export default function LoginForm() {
   const closeForgotPasswordModal = () => setIsForgotPasswordModalOpen(false);
 
   return (
-    <section className="bg-light w-100">
-      <div className="d-flex flex-column align-items-center justify-content-center px-4 py-5 h-100">
-        <a href="#" className="d-flex align-items-center mb-4 text-dark">
-          <span className="ms-2 fs-3 fw-semibold">Flowbite</span>
-        </a>
-        <div
-          className="card shadow border-0 w-100"
-          style={{ maxWidth: "400px" }}
-        >
-          <div className="card-body">
-            <h1 className="h5 mb-4 fw-bold">Sign in to your account</h1>
-            <form onSubmit={handleSubmit}>
-              <div className="mb-3">
-                <label htmlFor="email" className="form-label fw-medium">
-                  Your email
-                </label>
-                <input
-                  type="email"
-                  className="form-control"
-                  id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="name@company.com"
-                  required
-                />
+    <div className="container">
+      <div className="row justify-content-center">
+        <div className="col-md-6 col-lg-5">
+          <div className="card shadow-sm">
+            <div className="card-body">
+              <div className="text-center mb-4">
+                <img src="img/logo.jpg" alt="logo" className="mb-3" />
+                <h4 className="card-title">Login</h4>
               </div>
-              <div className="mb-3">
-                <label htmlFor="password" className="form-label fw-medium">
-                  Password
-                </label>
-                <input
-                  type="password"
-                  className="form-control"
-                  id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  required
-                />
-              </div>
-              <button type="submit" className="btn btn-primary w-100">
-                Sign in
-              </button>
-              <div className="text-center mt-3">
-                <p className="small text-muted">
-                  Don’t have an account yet?{" "}
-                  <a href="#" className="text-primary fw-medium">
-                    Sign up
-                  </a>
-                </p>
-              </div>
-            </form>
-            <button
-              onClick={openForgotPasswordModal}
-              className="btn btn-link text-primary text-decoration-none mt-2 p-0"
-            >
-              Forgot password?
-            </button>
+              <form onSubmit={handleSubmit}>
+                <div className="form-group mb-3">
+                  <label htmlFor="email">E-Mail Address</label>
+                  <input
+                    type="email"
+                    id="email"
+                    className="form-control"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    autoFocus
+                  />
+                </div>
+
+                <div className="form-group mb-3">
+                  <label htmlFor="password">Password</label>
+                  <input
+                    type="password"
+                    id="password"
+                    className="form-control"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={openForgotPasswordModal}
+                    className="btn btn-link float-end mt-1 p-0 small"
+                  >
+                    Forgot Password?
+                  </button>
+                </div>
+
+                <div className="form-check mb-3">
+                  <input
+                    type="checkbox"
+                    className="form-check-input"
+                    id="remember"
+                  />
+                  <label className="form-check-label" htmlFor="remember">
+                    Remember Me
+                  </label>
+                </div>
+
+                <button type="submit" className="btn btn-primary w-100">
+                  Login
+                </button>
+
+                <div className="text-center mt-3">
+                  <p className="small">
+                    Don’t have an account yet?{" "}
+                    <a href="/register">Create One</a>
+                  </p>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div className="text-center mt-3 text-muted">
+            &copy; 2024 &mdash; Your Company
           </div>
         </div>
       </div>
       <ForgotPasswordModal
         isOpen={isForgotPasswordModalOpen}
         onClose={closeForgotPasswordModal}
-      />
-    </section>
+      />{" "}
+      {/* Adiciona o modal */}
+    </div>
   );
 }
