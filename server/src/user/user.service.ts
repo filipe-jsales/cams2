@@ -32,8 +32,10 @@ export class UsersService {
     return hashedPassword;
   }
 
-  findAll(): Promise<User[]> {
-    return this.usersRepository.find();
+  async findAll(): Promise<Omit<User, 'password'>[]> {
+    const users = await this.usersRepository.find();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    return users.map(({ password, ...user }) => user);
   }
 
   findOne(id: number): Promise<User | null> {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Drawer,
   IconButton,
@@ -9,9 +9,14 @@ import {
   Typography,
   useTheme,
   Box,
-  SpeedDialIcon,
 } from "@mui/material";
 import { Link } from "react-router-dom";
+import {
+  CameraAltOutlined,
+  DashboardOutlined,
+  MenuOutlined,
+  PeopleOutlineOutlined,
+} from "@mui/icons-material";
 
 export default function Sidebar() {
   const theme = useTheme();
@@ -23,9 +28,9 @@ export default function Sidebar() {
   };
 
   const menuItems = [
-    { text: "Dashboard", icon: <SpeedDialIcon />, to: "/" },
-    { text: "Users", icon: <SpeedDialIcon />, to: "/users" },
-    { text: "Cams", icon: <SpeedDialIcon />, to: "/cams" },
+    { text: "Dashboard", icon: <DashboardOutlined />, to: "/" },
+    { text: "Users", icon: <PeopleOutlineOutlined />, to: "/users" },
+    { text: "Cams", icon: <CameraAltOutlined />, to: "/cams" },
   ];
 
   return (
@@ -56,13 +61,14 @@ export default function Sidebar() {
             </Typography>
           )}
           <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
-            <SpeedDialIcon />
+            <MenuOutlined />
           </IconButton>
         </Box>
 
         <List>
           {menuItems.map((item) => (
             <ListItem
+              // @ts-expect-error no overload matches this call
               button
               key={item.text}
               component={Link}
