@@ -104,3 +104,8 @@ Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
 - implementar a primeira tela do frontend
 
 - Implement CSRF Protection
+
+## comando de migration por enquanto:
+
+npm run migration:generate ./migrations/<NomeDaSuaMigration>
+npm run migration:run
