@@ -20,6 +20,7 @@ interface User {
   email: string;
   isActive: boolean;
   updatedAt: string;
+  recoveryCode: string;
 }
 
 function formatDate(dateString: string): string {
@@ -88,7 +89,7 @@ export default function UsersHome() {
               </TableCell>
               <TableCell align="center">{`${user.firstName} ${user.lastName}`}</TableCell>
               <TableCell align="center">{user.email}</TableCell>
-              <TableCell align="center">-</TableCell>
+              <TableCell align="center">{user.recoveryCode || "-"}</TableCell>
               <TableCell align="center">{formatDate(user.updatedAt)}</TableCell>
               <TableCell align="center">
                 {user.isActive ? (

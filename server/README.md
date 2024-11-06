@@ -100,10 +100,10 @@ Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
 
 ## TODO:
 
-- verificar a questao de como vai ficar as roles
-- implementar a primeira tela do frontend
-
-- Implement CSRF Protection
+- adicionar filtros no backend
+- botão adicionar novo usuário
+- filtro por nome, coluna + ordem ASC ou DESC
+- adicionar filtros no frontend usuarios
 
 ## comando de migration por enquanto:
 
