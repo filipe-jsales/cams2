@@ -19,6 +19,18 @@ interface User {
   lastName: string;
   email: string;
   isActive: boolean;
+  updatedAt: string;
+}
+
+function formatDate(dateString: string): string {
+  const date = new Date(dateString);
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const year = date.getFullYear();
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+
+  return `${day}/${month}/${year} ${hours}:${minutes}`;
 }
 
 export default function UsersHome() {
@@ -74,15 +86,10 @@ export default function UsersHome() {
               <TableCell align="center">
                 {user.isActive ? <LockOpen /> : <Lock />}
               </TableCell>
-
               <TableCell align="center">{`${user.firstName} ${user.lastName}`}</TableCell>
-
               <TableCell align="center">{user.email}</TableCell>
-
               <TableCell align="center">-</TableCell>
-
-              <TableCell align="center">01/11/2024 20:47</TableCell>
-
+              <TableCell align="center">{formatDate(user.updatedAt)}</TableCell>
               <TableCell align="center">
                 {user.isActive ? (
                   <CheckCircle color="success" />
