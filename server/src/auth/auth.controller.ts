@@ -12,6 +12,7 @@ import { AuthService } from './auth.service';
 import { SignInDto } from './dto/signin.dto';
 import { AuthGuard } from './auth.guard';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
+import { ApiBody } from '@nestjs/swagger';
 
 @Controller('auth')
 export class AuthController {
@@ -19,6 +20,7 @@ export class AuthController {
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
+  @ApiBody({ description: 'Sign in the user', type: SignInDto })
   signIn(@Body() signInDto: SignInDto) {
     return this.authService.signIn(signInDto);
   }
@@ -30,7 +32,7 @@ export class AuthController {
   }
 
   @UseGuards(AuthGuard)
-  @Get('profile')
+  @Get('me')
   getProfile(@Request() req: any) {
     return req.user;
   }

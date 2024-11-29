@@ -4,7 +4,7 @@ import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { UsersService } from 'src/user/user.service';
 import { SignInDto } from './dto/signin.dto';
 import * as bcrypt from 'bcrypt';
-import { User } from 'src/entities/user.entity';
+import { User } from 'src/user/entities/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -16,28 +16,35 @@ export class AuthService {
 
   async signIn(signInDto: SignInDto): Promise<{ access_token: string }> {
     const { email, password } = signInDto;
-    this.logger.log(`Attempting to sign in with email: ${email}`);
-
     const user = await this.findUserByEmail(email);
-    await this.authenticateUser(password, user, email);
-    const payload = { sub: user.id, email: user.email };
-    const token = await this.jwtService.signAsync(payload);
 
-    this.logger.log(`User signed in successfully: ${email}`);
-    this.logger.debug(`Generated JWT token: ${token}`);
+    await this.authenticateUser(password, user, email);
+
+    const payload = {
+      sub: user.id,
+      email: user.email,
+      roles: user.roles.map((role) => role.name),
+    };
+
+    const token = await this.jwtService.signAsync(payload);
     return { access_token: token };
   }
 
   async signUp(
     createUserDto: CreateUserDto,
   ): Promise<{ access_token: string }> {
-    this.logger.log(`Attempting to sign up with dto: ${createUserDto}`);
     const user = await this.usersService.create(createUserDto);
-    const payload = { sub: user.id, email: user.email };
-    return {
-      access_token: await this.jwtService.signAsync(payload),
+
+    const payload = {
+      sub: user.id,
+      email: user.email,
+      roles: user.roles.map((role) => role.name),
     };
+
+    const token = await this.jwtService.signAsync(payload);
+    return { access_token: token };
   }
+
   private async authenticateUser(password: string, user: User, email: string) {
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {

@@ -1,87 +1,71 @@
 import { useState } from "react";
-import {
-  Drawer,
-  IconButton,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Typography,
-  useTheme,
-  Box,
-} from "@mui/material";
+import { ListGroup, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import {
+  AutoAwesomeMosaicOutlined,
   CameraAltOutlined,
   DashboardOutlined,
+  GroupOutlined,
   MenuOutlined,
   PeopleOutlineOutlined,
+  PriorityHighOutlined,
 } from "@mui/icons-material";
 
 export default function Sidebar() {
-  const theme = useTheme();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selectedItem, setSelectedItem] = useState("Dashboard");
 
-  const handleItemClick = (item: string) => {
+  const handleItemClick = (item: string): void => {
     setSelectedItem(item);
   };
 
   const menuItems = [
-    { text: "Dashboard", icon: <DashboardOutlined />, to: "/" },
-    { text: "Users", icon: <PeopleOutlineOutlined />, to: "/users" },
-    { text: "Cams", icon: <CameraAltOutlined />, to: "/cams" },
+    { text: "Dashboard", icon: <DashboardOutlined />, to: "" },
+    { text: "Users", icon: <PeopleOutlineOutlined />, to: "users" },
+    { text: "Cams", icon: <CameraAltOutlined />, to: "cams" },
+    { text: "Mosaics", icon: <AutoAwesomeMosaicOutlined />, to: "mosaics" },
+    { text: "Groups", icon: <GroupOutlined />, to: "groups" },
+    { text: "Permissions", icon: <PriorityHighOutlined />, to: "permissions" },
   ];
 
   return (
-    <Box sx={{ display: "flex" }}>
-      <Drawer
-        variant="permanent"
-        sx={{
-          width: isCollapsed ? 80 : 240,
-          flexShrink: 0,
-          "& .MuiDrawer-paper": {
-            width: isCollapsed ? 80 : 240,
-            boxSizing: "border-box",
-            backgroundColor: theme.palette.background.paper,
-          },
+    <div className="d-flex">
+      <div
+        className={`sidebar bg-light ${isCollapsed ? "collapsed" : ""}`}
+        style={{
+          width: isCollapsed ? "80px" : "240px",
+          transition: "width 0.3s",
         }}
       >
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            p: 2,
-          }}
-        >
-          {!isCollapsed && (
-            <Typography variant="h6" noWrap>
-              Admin Dashboard
-            </Typography>
-          )}
-          <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
+        <div className="d-flex align-items-center justify-content-between p-2">
+          {!isCollapsed && <h6 className="m-0">NuvCam</h6>}
+          <Button
+            variant="link"
+            onClick={() => setIsCollapsed(!isCollapsed)}
+            className="p-0"
+            style={{ color: "#6c757d" }}
+          >
             <MenuOutlined />
-          </IconButton>
-        </Box>
+          </Button>
+        </div>
 
-        <List>
+        <ListGroup variant="flush">
           {menuItems.map((item) => (
-            <ListItem
-              // @ts-expect-error no overload matches this call
-              button
-              key={item.text}
-              component={Link}
+            <ListGroup.Item
+              action
+              as={Link}
               to={item.to}
-              selected={selectedItem === item.text}
+              key={item.text}
+              active={selectedItem === item.text}
               onClick={() => handleItemClick(item.text)}
+              className="d-flex align-items-center"
             >
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              {!isCollapsed && <ListItemText primary={item.text} />}
-            </ListItem>
+              <div className="me-2">{item.icon}</div>
+              {!isCollapsed && <span>{item.text}</span>}
+            </ListGroup.Item>
           ))}
-        </List>
-      </Drawer>
-    </Box>
+        </ListGroup>
+      </div>
+    </div>
   );
 }

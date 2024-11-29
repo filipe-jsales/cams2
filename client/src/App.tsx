@@ -1,20 +1,16 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import DashboardHome from "./pages/DashboardHome";
-import UsersHome from "./pages/UsersHome";
-import CamsHome from "./pages/CamsHome";
-import DashboardLayout from "./components/Dashboard/DashboardLayout";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { AppRouter } from "./routes/router";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+import { Provider } from "react-redux";
+import { store } from "./store/store";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<DashboardLayout />}>
-          <Route index element={<DashboardHome />} />
-          <Route path="users" element={<UsersHome />} />
-          <Route path="cams" element={<CamsHome />} />
-        </Route>
-      </Routes>
-    </Router>
+    <Provider store={store}>
+      <AppRouter />
+      <ToastContainer />
+    </Provider>
   );
 }
 

@@ -1,10 +1,15 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
-import { User } from './entities/user.entity';
 import { UsersModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { CamsModule } from './cams/cams.module';
+import { RoleModule } from './role/role.module';
+import { GroupsModule } from './groups/groups.module';
+import { MosaicsModule } from './mosaics/mosaics.module';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 @Module({
   imports: [
@@ -16,18 +21,20 @@ import { ThrottlerModule } from '@nestjs/throttler';
     ]),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: process.env.DATABASE_HOST || 'mysql.chargedcloud.com.br',
-      port: parseInt(process.env.PORT, 10) || 3306,
-      username:
-        process.env.DATABASE_USER || '6ba395af-77b0-4b0c-bb9f-816784d39275',
-      password: process.env.DATABASE_PASSWORD || 'xdbrowCZ9NLTVV4c8CpY',
-      database:
-        process.env.DATABASE_NAME || '6ba395af-77b0-4b0c-bb9f-816784d39275',
-      entities: [User],
-      synchronize: true,
+      host: process.env.DATABASE_HOST,
+      port: parseInt(process.env.DATABASE_PORT, 10) || 3306,
+      username: process.env.DATABASE_USER,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_NAME,
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      synchronize: false,
     }),
     UsersModule,
     AuthModule,
+    CamsModule,
+    RoleModule,
+    GroupsModule,
+    MosaicsModule,
   ],
 })
 export class AppModule {

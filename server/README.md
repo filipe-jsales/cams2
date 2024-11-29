@@ -109,3 +109,11 @@ Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
 
 npm run migration:generate ./migrations/<NomeDaSuaMigration>
 npm run migration:run
+npx prettier --write .
+
+todo:
+
+- ajeitar o modal de forget password
+- adicionar os filtros no findAll do backend
+- configurar toda a filtragem e paginação no front
+- (opcional) configurar o template de email e serviço de email

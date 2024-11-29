@@ -1,14 +1,16 @@
 /* eslint-disable prettier/prettier */
 import { DataSource } from 'typeorm';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 export const AppDataSource = new DataSource({
   type: 'mysql',
-  host: process.env.DATABASE_HOST || 'mysql.chargedcloud.com.br',
-  port: parseInt(process.env.PORT, 10) || 3306,
-  username: process.env.DATABASE_USER || '6ba395af-77b0-4b0c-bb9f-816784d39275',
-  password: process.env.DATABASE_PASSWORD || 'xdbrowCZ9NLTVV4c8CpY',
-  database: process.env.DATABASE_USER || '6ba395af-77b0-4b0c-bb9f-816784d39275',
-  entities: [`${__dirname}/src/entities/*.ts`],
+  host: process.env.DATABASE_HOST,
+  port: parseInt(process.env.DATABASE_PORT, 10),
+  username: process.env.DATABASE_USER,
+  password: process.env.DATABASE_PASSWORD,
+  database: process.env.DATABASE_NAME,
+  entities: [__dirname + '/**/*.entity{.ts,.js}'],
   migrations: [`${__dirname}/migrations/*{.ts,.js}`],
   synchronize: false,
 });
